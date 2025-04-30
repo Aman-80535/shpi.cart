@@ -73,16 +73,17 @@ export const addOrder = createAsyncThunk(
   async (orderData, thunkAPI) => {
     try {
       const user = auth.currentUser;
-      const userid = user?.uid || localStorage.getItem('user_uid'); // Fallback to localStorage
+      const userid = user?.uid || user_uid; // Fallback to localStorage
 
       if (!userid) {
         return thunkAPI.rejectWithValue('User not authenticated');
       }
       // Add order to Firestore
+      debugger
       const ordersRef = collection(db, 'orders');
       const docRef = await addDoc(ordersRef, { ...orderData, user_uid: userid });
       // Delete cart items for this user
-      const cartDocRef = doc(db, 'carts', user_uid);
+      const cartDocRef = doc(db, 'carts', userid);
       await deleteDoc(cartDocRef);
 
       alert(`Order placed to:\n${orderData?.address}`);
