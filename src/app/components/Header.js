@@ -42,7 +42,7 @@ export const Header = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
 			<div className="container-fluid">
-				<a className="navbar-brand" href="/">Shopi</a>
+			<Link href="/" className="navbar-brand" >Shopi</Link>
 				<button
 					className="navbar-toggler"
 					type="button"
@@ -59,32 +59,32 @@ export const Header = () => {
 						{/* Left-aligned items */}
 						<ul className="navbar-nav me-auto">
 							<li className="nav-item" >
-								<a className="nav-link active" aria-current="page" href="/" onClick={(e) => {
+								<Link className="nav-link active" aria-current="page" href="/" onClick={(e) => {
 									e.preventDefault();
 									dispatch(filterProducts('all'));
-								}}>All</a>
+								}}>All</Link>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="/" onClick={(e) => {
+								<Link className="nav-link" href="/" onClick={(e) => {
 									e.preventDefault();
 									dispatch(filterProducts('cloth'));
-								}}>Clothes</a>
+								}}>Clothes</Link>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="/" onClick={(e) => {
+								<Link className="nav-link" href="/" onClick={(e) => {
 									e.preventDefault();
 									dispatch(filterProducts('electronics'));
-								}}>Electronics</a>
+								}}>Electronics</Link>
 							</li>
 
 						</ul>
 						{/* Right-aligned items */}
 						<ul className="nav ms-auto">
 							<li className="nav-item">
-								<a className="nav-link active" aria-current="page" href="#">{userData?.email}</a>
+								<Link className="nav-link active" aria-current="page" href="#">{userData?.email}</a>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="/myorders">My Orders</a>
+								<Link className="nav-link" href="/myorders">My Orders</a>
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link" href="/myaccount">
@@ -103,9 +103,9 @@ export const Header = () => {
 							}
 
 							<li className="nav-item">
-								<a className="nav-link" onClick={togglePopup}>
+								<Link className="nav-link" onClick={togglePopup}>
 									<i className="fas fa-shopping-cart"></i> Cart ({items.length > 0 ? items?.length : 0})
-								</a>
+								</Link>
 							</li>
 
 						</ul>
