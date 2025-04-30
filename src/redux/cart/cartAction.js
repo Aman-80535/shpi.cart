@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { doc, getDoc, setDoc, arrayRemove, arrayUnion, updateDoc, collection,query, where,deleteDoc, addDoc, getDocs } from 'firebase/firestore';
+import { doc, getDoc, setDoc, arrayRemove, arrayUnion, updateDoc, collection, query, where, deleteDoc, addDoc, getDocs } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import { getUserUID, simpleNotify, waitForUser } from '@/utils/common';
 import { app } from '@/firebase';
@@ -79,9 +79,9 @@ export const addOrder = createAsyncThunk(
         return thunkAPI.rejectWithValue('User not authenticated');
       }
       // Add order to Firestore
-      debugger
       const ordersRef = collection(db, 'orders');
       const docRef = await addDoc(ordersRef, { ...orderData, user_uid: userid });
+      
       // Delete cart items for this user
       const cartDocRef = doc(db, 'carts', userid);
       await deleteDoc(cartDocRef);
@@ -91,25 +91,31 @@ export const addOrder = createAsyncThunk(
       return { id: docRef.id, ...orderData };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-    }});
+    }
+  });
 
-    export const fetchUserOrders = createAsyncThunk(
-      'orders/fetchUserOrders',
-      async (_, thunkAPI) => {
-        try {
-          const ordersRef = collection(db, 'orders');
-          const q = query(ordersRef, where('user_uid', '==', user_uid));
-          const snapshot = await getDocs(q);
-          const orders = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-          return orders;
-        } catch (error) {
-          return thunkAPI.rejectWithValue(error.message);
-        }
+export const fetchUserOrders = createAsyncThunk(
+  'orders/fetchUserOrders',
+  async (_, thunkAPI) => {
+    try {
+      const ordersRef = collection(db, 'orders');
+      const user = auth.currentUser;
+      const userid = user?.uid || user_uid;
+      if (!userid) {
+        return thunkAPI.rejectWithValue('User not authenticated');
       }
-    );
+      const q = query(ordersRef, where('user_uid', '==', userid));
+      const snapshot = await getDocs(q);
+      const orders = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      return orders;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 
 // Async Thunk to Fetch Cart Items
