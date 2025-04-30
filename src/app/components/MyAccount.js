@@ -2,10 +2,11 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/redux/user/userActions";
-import nextConfig from "../../../next.config.mjs";
 import { simpleNotify } from "@/utils/common";
+import { useRouter } from "next/navigation";
 
 export const MyAccount = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { isLoading, error, userData } = useSelector((state) => state.user);
 
@@ -13,7 +14,7 @@ export const MyAccount = () => {
     dispatch(logoutUser());
     simpleNotify('Logout successfully!')
     localStorage.removeItem("user_uid");
-    // navigate("/login")
+    router.push("/")
   };
 
   return (

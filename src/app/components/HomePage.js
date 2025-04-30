@@ -8,9 +8,10 @@ import '../styles/Home.css';
 import { fetchProducts } from "@/redux/user/userActions";
 import { useSearchParams } from "next/navigation";
 import { useLoader } from "@/context/LoaderContext";
+import { simpleNotify } from "@/utils/common";
 
 export const HomePage = ({ data = [] }) => {
-	const { products: productsData, loading: Loading } = useSelector(s => s.user)
+	const { products: productsData, loading: Loading, error } = useSelector(s => s.user)
 	const products = productsData;
 	const [searchKey, setSearchKey] = useState("");
 	const [filteredData, setFilteredData] = useState(products);
@@ -20,19 +21,21 @@ export const HomePage = ({ data = [] }) => {
 
 
 	useEffect(() => {
-
 		const fetchData = async () => {
+		  try {
+			setLoading(true);
 			await dispatch(fetchProducts());
+		  } catch (err) {
+			simpleNotify('Error fetching products');
+		  } finally {
+			setLoading(false);
+		  }
 		};
-
+	  
 		fetchData();
-	}, []);
+	  }, []);
+	  
 
-	if (Loading) {
-		setLoading(true)
-	} else {
-		setLoading(false)
-	}
 	console.log("prodd", products)
 
 	useEffect(() => {
@@ -45,6 +48,7 @@ export const HomePage = ({ data = [] }) => {
 			);
 			setFilteredData(filtered);
 		}
+
 	}, [searchKey, products]);
 
 
@@ -66,6 +70,10 @@ export const HomePage = ({ data = [] }) => {
 
 		fetchData();
 	};
+
+	if (error) {
+		return simpleNotify(error.message)
+	}
 
 
 	return (

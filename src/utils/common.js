@@ -23,9 +23,10 @@ export const waitForUser = () => new Promise((resolve) => {
     checkUser();
   })
 
-  export const getUserUID = () => {
+  export const getUserUID = async () => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('user_uid');
+        const user_id = await localStorage.getItem('user_uid'); 
+      return user_id;
     }
     return null;
   };

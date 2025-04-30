@@ -4,8 +4,7 @@ import { fetchUserOrders } from '@/redux/cart/cartAction';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-const OrderHistory = () => {
+ const OrderHistory = () => {
 	const { orderList, loading } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const { setLoading } = useLoader()

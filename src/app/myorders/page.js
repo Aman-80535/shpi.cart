@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { initializeStore } from '@/redux/store';
 import { fetchUserData } from '@/redux/user/userActions';

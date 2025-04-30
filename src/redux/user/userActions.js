@@ -24,7 +24,6 @@ export const fetchUserData = createAsyncThunk(
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        localStorage.setItem(" user_uid",  user.uid)
         return  data
       } else {
         throw new Error('No user data found');
@@ -42,6 +41,7 @@ export const logoutUser = createAsyncThunk(
     const auth = getAuth();
     try {
       Cookies.remove('token');
+      localStorage.removeItem('user_uid')
       await signOut(auth);
       return true; 
     } catch (error) {

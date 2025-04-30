@@ -5,7 +5,7 @@ import Loader from './Loader'; // Your existing loader
 
 export default function GlobalLoader() {
   const { loading } = useLoader();
-
+  console.log(loading, "loadingggg");
   return (
     <>
       {loading && (

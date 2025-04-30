@@ -22,7 +22,6 @@ export const Header = () => {
 	const router = useRouter();
 
 	const togglePopup = () => setIsOpen(!isOpen);
-	console.log("token", token)
 	async function handleLogoutUser(e) {
 		e.preventDefault();
 		dispatch(logoutUser());
@@ -104,7 +103,7 @@ export const Header = () => {
 
 							<li className="nav-item">
 								<Link className="nav-link" onClick={togglePopup} href="#">
-									<i className="fas fa-shopping-cart"></i> Cart ({items.length > 0 ? items?.length : 0})
+									<i className="fas fa-shopping-cart"></i> Cart ({items?.length > 0 && token ? items?.length : 0})
 								</Link>
 							</li>
 
