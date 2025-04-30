@@ -81,10 +81,10 @@ export const Header = () => {
 						{/* Right-aligned items */}
 						<ul className="nav ms-auto">
 							<li className="nav-item">
-								<Link className="nav-link active" aria-current="page" href="#">{userData?.email}</a>
+								<Link className="nav-link active" aria-current="page" href="#">{userData?.email}</Link>
 							</li>
 							<li className="nav-item">
-								<Link className="nav-link" href="/myorders">My Orders</a>
+								<Link className="nav-link" href="/myorders">My Orders</Link>
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link" href="/myaccount">
@@ -103,7 +103,7 @@ export const Header = () => {
 							}
 
 							<li className="nav-item">
-								<Link className="nav-link" onClick={togglePopup}>
+								<Link className="nav-link" onClick={togglePopup} href="#">
 									<i className="fas fa-shopping-cart"></i> Cart ({items.length > 0 ? items?.length : 0})
 								</Link>
 							</li>
