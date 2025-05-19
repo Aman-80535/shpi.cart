@@ -31,7 +31,7 @@ const OrderHistory = () => {
 						<div className="card-body">
 							<h5 className="card-title">Order ID: {order.id}</h5>
 							<p className="card-text">
-								Date: {order?.date ? (moment(order.date).format('dddd, DD/MM/YYYY - hh:mm A')) : ""}
+								Date: {order?.date ? (moment(order.date.toDate()).format('dddd, DD/MM/YYYY - hh:mm A')) : ""}
 							</p>
 							<p>Status: Success</p>
 							<p className="card-text">

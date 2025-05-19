@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { doc, getDoc, setDoc, arrayRemove, arrayUnion, updateDoc, collection, query, where, deleteDoc, addDoc, getDocs } from 'firebase/firestore';
+import { doc, getDoc, setDoc, arrayRemove, orderBy,serverTimestamp, arrayUnion, updateDoc, collection, query, where, deleteDoc, addDoc, getDocs } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import { getUserUID, simpleNotify, waitForUser } from '@/utils/common';
 import { app } from '@/firebase';
@@ -80,8 +80,8 @@ export const addOrder = createAsyncThunk(
       }
       // Add order to Firestore
       const ordersRef = collection(db, 'orders');
-      const docRef = await addDoc(ordersRef, { ...orderData, user_uid: userid });
-      
+      const docRef = await addDoc(ordersRef, { ...orderData, user_uid: userid,   date: serverTimestamp() });
+
       // Delete cart items for this user
       const cartDocRef = doc(db, 'carts', userid);
       await deleteDoc(cartDocRef);
@@ -105,7 +105,11 @@ export const fetchUserOrders = createAsyncThunk(
       if (!userid) {
         return thunkAPI.rejectWithValue('User not authenticated');
       }
-      const q = query(ordersRef, where('user_uid', '==', userid));
+      const q = query(
+        ordersRef,
+        where('user_uid', '==', userid),
+        orderBy('date', 'desc')
+      );
       const snapshot = await getDocs(q);
       const orders = snapshot.docs.map(doc => ({
         id: doc.id,

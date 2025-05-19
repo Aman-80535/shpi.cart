@@ -30,7 +30,6 @@ export default function ProductDetails() {
 	async function createOrder(token = {}) {
 		try {
 			const result = await dispatch(addOrder({
-				date: Date(),
 				address,
 				items,
 				...token,
