@@ -97,6 +97,7 @@ export const addOrder = createAsyncThunk(
 export const fetchUserOrders = createAsyncThunk(
   'orders/fetchUserOrders',
   async (_, thunkAPI) => {
+    const user_uid = await getUserUID();
     try {
       const ordersRef = collection(db, 'orders');
       const user = auth.currentUser;

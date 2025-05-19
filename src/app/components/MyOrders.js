@@ -4,7 +4,8 @@ import { fetchUserOrders } from '@/redux/cart/cartAction';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
- const OrderHistory = () => {
+import Loader from './common/Loader';
+const OrderHistory = () => {
 	const { orderList, loading } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 	const { setLoading } = useLoader()
@@ -12,18 +13,17 @@ import { useDispatch, useSelector } from 'react-redux';
 	useEffect(() => {
 		setLoading(true);
 		const fetchData = async () => {
-			await dispatch(fetchUserOrders());
+			dispatch(fetchUserOrders());
 			setLoading(false);
 		};
 
 		fetchData();
 	}, [dispatch]);
 
-
 	return (
 		<div className="container mt-4">
 			<h2>Your Orders</h2>
-
+			{loading && <Loader />}
 
 			{orderList?.length === 0 && !loading ? <p>No orders yet.</p>
 				: orderList?.map((order) => (
@@ -47,7 +47,9 @@ import { useDispatch, useSelector } from 'react-redux';
 											<div className="card-body">
 												<h6 className="card-title">{item.name}</h6>
 												<p className="card-text text-muted">₹{item.price.toFixed(2)}</p>
-												<p className="card-text">Quantity: {item.quantity}</p>
+												<p className="card-text">
+													Payment Status: <span className={`${item?.payment ? 'text-success' : ''}`}>{item?.payment ? item?.payment : 'Pending'}</span>
+												</p>													<p className="card-text">Quantity: {item.quantity}</p>
 											</div>
 										</div>
 									</div>
