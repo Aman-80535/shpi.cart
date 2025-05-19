@@ -34,6 +34,9 @@ const OrderHistory = () => {
 								Date: {order?.date ? (moment(order.date).format('dddd, DD/MM/YYYY - hh:mm A')) : ""}
 							</p>
 							<p>Status: Success</p>
+							<p className="card-text">
+								Payment Status: <span className={`${order?.payment ? 'text-success fw-bold' : 'text-danger fw-bold'}`}>{order?.payment ? order?.payment : 'Pending'}</span>
+							</p>
 							<div className="row">
 								{order?.items?.map((item) => (
 									<div className="col-md-4 mb-3" key={item.id}>
@@ -47,9 +50,7 @@ const OrderHistory = () => {
 											<div className="card-body">
 												<h6 className="card-title">{item.name}</h6>
 												<p className="card-text text-muted">₹{item.price.toFixed(2)}</p>
-												<p className="card-text">
-													Payment Status: <span className={`${item?.payment ? 'text-success' : ''}`}>{item?.payment ? item?.payment : 'Pending'}</span>
-												</p>													<p className="card-text">Quantity: {item.quantity}</p>
+												<p className="card-text">Quantity: {item.quantity}</p>
 											</div>
 										</div>
 									</div>
