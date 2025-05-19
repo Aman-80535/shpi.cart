@@ -144,7 +144,7 @@ export default function ProductDetails() {
 									</div>
 									<div className='mt-4 mb-2'>
 										<StripeCheckout
-											stripeKey="pk_test_51JGNLWBVnEa8wQ1y8ZGMn9tw57qHCROwaNVr5eplb1UvQsN410gJpXPyNW8yFgNQZeM7twAoAjZ7LosccszLnDMz00pIIh0lL0"
+											stripeKey={process.env.REACT_APP_STRIPE_CODE}
 											token={handleToken}
 											amount={grandTotal.toFixed(2) * 100}
 											name="Shopi Cart"
