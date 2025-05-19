@@ -50,7 +50,12 @@ export default function ProductDetails() {
 	}
 
 	const handleToken = async (token, adresses) => {
-		createOrder({ token, payment: 'success' });
+		try {
+			await createOrder({ token, payment: 'success' });
+			alert('Payment successful and order placed!');
+		} catch (error) {
+			alert('Payment was successful, but something went wrong while placing the order.');
+		}
 	};
 
 	return (
@@ -143,7 +148,7 @@ export default function ProductDetails() {
 											token={handleToken}
 											amount={grandTotal.toFixed(2) * 100}
 											name="Shopi Cart"
-											 currency="INR"
+											currency="INR"
 										/>
 									</div>
 
