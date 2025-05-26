@@ -48,10 +48,12 @@ export const LoginForm = () => {
 			dispatch(setToken(idToken))
 			dispatch(fetchUserData())
 			simpleNotify("Login Successfully!")
+			setTimeout(() =>{
+			}, 3000)
 			router.push("/")
 		} catch (error) {
 			setError(error.message);
-			console.error("Error logging in:", error.message);
+			console.log("Error logging in:", error.message);
 		}
 
 		setFormData({

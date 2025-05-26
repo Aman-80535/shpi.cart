@@ -113,7 +113,8 @@ export const fetchUserOrders = createAsyncThunk(
       const snapshot = await getDocs(q);
       const orders = snapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
+        date: doc.data().date.toDate().toISOString() || null
       }));
       return orders;
     } catch (error) {

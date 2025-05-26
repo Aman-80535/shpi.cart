@@ -43,7 +43,8 @@ export const logoutUser = createAsyncThunk(
       Cookies.remove('token');
       localStorage.removeItem('user_uid')
       await signOut(auth);
-      return true; 
+      simpleNotify("Log out successfully!")
+      return; 
     } catch (error) {
       return rejectWithValue(error.message); 
     }

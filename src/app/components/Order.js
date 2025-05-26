@@ -142,7 +142,7 @@ export default function ProductDetails() {
 									<div className="bg-light border p-3 mb-4 text-start rounded">
 										{address || <em>No address entered</em>}
 									</div>
-									
+
 									<div className='mt-4 mb-2'>
 										<StripeCheckout
 											stripeKey={process.env.NEXT_PUBLIC_STRIPE_CODE}

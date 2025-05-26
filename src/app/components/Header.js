@@ -25,23 +25,26 @@ export const Header = () => {
 	async function handleLogoutUser(e) {
 		e.preventDefault();
 		dispatch(logoutUser());
-		router.push('/')
+		router.push('/');
 	}
 	useEffect(() => {
-		const fetchData = async () => {
-			if (true) {
-				const result = dispatch(fetchUserData(token));
-				console.log("Fetched User Data:", result);
-			}
-		};
-		fetchData();
+		if (typeof window !== 'undefined') {
+
+			const fetchData = async () => {
+				if (true) {
+					const result = dispatch(fetchUserData(token));
+					console.log("Fetched User Data:", result);
+				}
+			};
+			fetchData();
+		}
 	}, []);
 
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
 			<div className="container-fluid">
-			<Link href="/" className="navbar-brand" >Shopi</Link>
+				<Link href="/" className="navbar-brand" >Shopi</Link>
 				<button
 					className="navbar-toggler"
 					type="button"

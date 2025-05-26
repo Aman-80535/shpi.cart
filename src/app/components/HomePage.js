@@ -21,20 +21,23 @@ export const HomePage = ({ data = [] }) => {
 
 
 	useEffect(() => {
-		const fetchData = async () => {
-		  try {
-			setLoading(true);
-			await dispatch(fetchProducts());
-		  } catch (err) {
-			simpleNotify('Error fetching products');
-		  } finally {
-			setLoading(false);
-		  }
-		};
-	  
-		fetchData();
-	  }, []);
-	  
+		// if (typeof window !== 'undefined') {
+
+			const fetchData = async () => {
+				try {
+					setLoading(true);
+					await dispatch(fetchProducts());
+				} catch (err) {
+					simpleNotify('Error fetching products');
+				} finally {
+					setLoading(false);
+				}
+			};
+
+			fetchData();
+		// }
+	}, []);
+
 
 	console.log("prodd", products)
 

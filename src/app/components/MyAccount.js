@@ -4,21 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/redux/user/userActions";
 import { simpleNotify } from "@/utils/common";
 import { useRouter } from "next/navigation";
+import { useLoader } from "@/context/LoaderContext";
 
 export const MyAccount = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isLoading, error, userData } = useSelector((state) => state.user);
+  const { setLoading } = useLoader()
 
   const handleLogout = () => {
+    setLoading(true);
     dispatch(logoutUser());
-    simpleNotify('Logout successfully!')
     localStorage.removeItem("user_uid");
-    router.push("/")
+    router.push("/");
+    setLoading(false);
   };
 
   return (
-    <div classNameName="container" style={{ textAlign: "-webkit-center", }}>
+    <div className="container" style={{ textAlign: "-webkit-center", }}>
       <p>My Account</p>
       <div className="card" style={{
         height: "420px",

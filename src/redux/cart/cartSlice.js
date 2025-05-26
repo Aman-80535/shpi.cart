@@ -45,6 +45,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchUserOrders.fulfilled, (state, action) => {
+        
         state.loading = false;
         state.orderList = action.payload;
       })
@@ -56,28 +57,28 @@ const cartSlice = createSlice({
 
       .addCase(addToCart.pending, (state, action) => {
         state.loading = true;
-      
+
         const incomingItem = action.meta.arg;
         const existingItemIndex = state.items.findIndex(i => i.id === incomingItem.id);
-      
+
         if (existingItemIndex > -1) {
           state.items[existingItemIndex].quantity += 1;
         } else {
           state.items.push({ ...incomingItem, quantity: 1 });
         }
       })
-      
+
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.items = Array.isArray(action.payload) ? action.payload : [];
       })
-      
+
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
-      
+
         const failedItem = action.meta.arg;
         const index = state.items.findIndex(item => item.id === failedItem.id);
-      
+
         if (index > -1) {
           const currentItem = state.items[index];
           if (currentItem.quantity > 1) {
@@ -86,11 +87,11 @@ const cartSlice = createSlice({
             state.items.splice(index, 1);
           }
         }
-      
+
         state.error = action.payload;
       })
-      
-      
+
+
 
       // Remove Item from Cart with Optimistic Update
       .addCase(removeFromCart.pending, (state, action) => {
